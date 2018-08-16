@@ -1,6 +1,6 @@
-# Microservice Template
+# Template Project
 
-This template is used for creating new microservices. 
+This template is used for creating APIs using Express. 
 
 1 - Remove .git/ folder
 
