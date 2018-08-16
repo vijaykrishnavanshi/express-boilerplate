@@ -9,15 +9,18 @@ const logger = require("./utils/logger");
 const dbURI = process.env.MONGOURI || "mongodb://localhost/template_project";
 
 // Create the database connection
-mongoose.connect(dbURI, err => {
-  if (err) {
-    logger.info("DB Error: ", err);
-    throw err;
-  } else {
-    logger.info(dbURI);
-    logger.info("MongoDB Connected");
+mongoose.connect(
+  dbURI,
+  err => {
+    if (err) {
+      logger.info("DB Error: ", err);
+      throw err;
+    } else {
+      logger.info(dbURI);
+      logger.info("MongoDB Connected");
+    }
   }
-});
+);
 
 // CONNECTION EVENTS
 // When successfully connected

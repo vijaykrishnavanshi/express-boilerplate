@@ -20,7 +20,7 @@ _dummy.get = function(queryData) {
     const projection = {};
     const option = {
       lean: true
-    }
+    };
     Dummy.find(criteria, projection, option)
       .then(dummy => {
         if (dummy) {
