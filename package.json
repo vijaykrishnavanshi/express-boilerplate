@@ -4,7 +4,7 @@
   "description": "This repo contains the template code that can be used to develop new mcroservices.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive \"./api/**/*.test.js\"",
     "start": "node server.js",
     "lint": "./node_modules/.bin/eslint . --fix"
   },
@@ -33,6 +33,8 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-security": "^1.4.0",
+    "mocha": "^5.2.0",
+    "nock": "^9.6.1",
     "prettier": "^1.12.1"
   }
 }
