@@ -18,12 +18,8 @@ const auth = require("../../lib/auth");
  * @apiDescription This api is used by signup the user using email.
  * @apiParam {String} email Email Id of the user.
  * @apiParam {String} password Password.
- * @apiParam {String} mobile Mobile of the user.
  * @apiParam {String} name Name of the user.
- * @apiParam {String} role Role of the user ["USER", "PROVIDER"].
- * @apiParam {String} dob If role is ["USER"].
- * @apiParam {String} officePhoneNo If role is ["PROVIDER"].
- * @apiParam {String} country Country of the User.
+ * @apiParam {String} address Address of the user.
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
  *     {

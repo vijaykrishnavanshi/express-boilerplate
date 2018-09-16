@@ -80,13 +80,6 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "mobile",
-            "description": "<p>Mobile of the user.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
             "field": "name",
             "description": "<p>Name of the user.</p>"
           },
@@ -94,29 +87,8 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "role",
-            "description": "<p>Role of the user [&quot;USER&quot;, &quot;PROVIDER&quot;].</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "dob",
-            "description": "<p>If role is [&quot;USER&quot;].</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "officePhoneNo",
-            "description": "<p>If role is [&quot;PROVIDER&quot;].</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "country",
-            "description": "<p>Country of the User.</p>"
+            "field": "address",
+            "description": "<p>Address of the user.</p>"
           }
         ]
       }

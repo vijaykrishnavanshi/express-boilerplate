@@ -6,7 +6,7 @@
     "url" : "http://localhost/v1",
     "header": {
       "title": "Setup",
-      "filename": "./doc-templates/header.md"
+      "filename": "./apidocs/header.md"
     },
     "footer": {
       "title": "Cleanup"
