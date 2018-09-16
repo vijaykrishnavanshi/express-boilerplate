@@ -7,8 +7,10 @@
 const express = require("express");
 const app = express();
 
-const DummyRoute = require("./dummyRoute");
+const UserRoute = require("./user-module/user.route");
+const PostRoute = require("./post-module/post.route");
 
-app.use(DummyRoute);
+app.use(UserRoute);
+app.use(PostRoute);
 
 module.exports = app;

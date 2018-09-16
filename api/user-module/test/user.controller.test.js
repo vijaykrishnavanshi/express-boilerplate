@@ -1,5 +1,5 @@
 const assert = require("assert");
-const controller = require("./dummyController");
+const UserController = require("../user.controller");
 
 describe("Dummy Controller", function() {
   describe("#get()", function() {
@@ -7,7 +7,7 @@ describe("Dummy Controller", function() {
       const queryData = {
         status: true
       };
-      controller.get(queryData).catch(err => {
+      UserController.get(queryData).catch(err => {
         assert.equal(err, new Error("Data not found"));
       });
     });
@@ -15,8 +15,7 @@ describe("Dummy Controller", function() {
   describe("#post()", function() {
     it("should not create data if body is empty", function() {
       const queryData = {};
-      controller
-        .post(queryData)
+      UserController.post(queryData)
         .then(data => {
           assert.not.exist(data);
         })
