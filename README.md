@@ -20,6 +20,5 @@ npm start
 ```
 TODOS: 
 
-[] Update test of every module
-
-[] Implement posts module with authentication
+- [] Update test of every module
+- [] Implement posts module with authentication
