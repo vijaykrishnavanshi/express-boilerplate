@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --recursive \"./api/**/*.test.js\"",
     "start": "node server.js",
-    "lint": "./node_modules/.bin/eslint . --fix"
+    "lint": "./node_modules/.bin/eslint . --fix",
+    "generate-docs": "./node_modules/apidoc/bin/apidoc -i ./ -f \".*\\.route[s]?.js$\" -o docs/"
   },
   "keywords": [
     "template",
@@ -15,6 +16,7 @@
   "author": "Vijay Krishnavanshi",
   "license": "MIT",
   "dependencies": {
+    "apidoc": "^0.17.6",
     "bunyan": "^1.8.12",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",

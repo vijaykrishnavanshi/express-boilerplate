@@ -1,0 +1,15 @@
+{
+    "name": "Template Project",
+    "version": "0.1.0",
+    "description": "This is a template project.",
+    "title": "Template Project",
+    "url" : "http://localhost/v1",
+    "header": {
+      "title": "Setup",
+      "filename": "./doc-templates/header.md"
+    },
+    "footer": {
+      "title": "Cleanup"
+    }
+}
+  
