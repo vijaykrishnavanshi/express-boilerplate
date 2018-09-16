@@ -18,7 +18,7 @@ npm install
 ```closure
 npm start
 ```
-TODOS: 
 
-- [] Update test of every module
-- [] Implement posts module with authentication
+## TODOS
+- [ ] Update test of every module
+- [ ] Implement posts module with authentication
