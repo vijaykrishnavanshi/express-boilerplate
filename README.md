@@ -1,6 +1,19 @@
 # Template Project
 
-This template is used for creating APIs using Express. 
+This template is used for creating APIs using Express.
+
+## Prerequisites
+
+* Install NodeJS, if not installed
+
+        * wget -qO- https://deb.nodesource.com/setup_8.x | bash -
+        * sudo apt-get install -y nodejs
+
+* Install npm, if not installed
+
+        * sudo apt-get install npm
+
+## To run the project
 
 0 - setup node and npm if not already done.
 
@@ -15,6 +28,7 @@ npm install
 ```
 
 4 - Run command to start the application.
+
 ```closure
 npm start
 ```
