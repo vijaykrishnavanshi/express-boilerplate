@@ -31,6 +31,7 @@ app.use("/ping", function(req, res) {
 
 // Mount the Routes
 app.use("/v1", routes);
+app.use("/documentation", express.static("docs"));
 
 app.use(function(err, req, res, next) {
   res.status(400).json(err);
