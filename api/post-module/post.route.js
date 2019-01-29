@@ -9,6 +9,8 @@ const router = express.Router();
 const validate = require("express-validation");
 const validation = require("./post.validation");
 const PostController = require("./post.controller");
+const asyncHandler = require("../common/async.handler");
+const responseHandler = require("../common/response.handler");
 const { logger } = require("../../utils");
 
 /**
@@ -44,34 +46,21 @@ const { logger } = require("../../utils");
  *     }
  */
 
-router.route("/create").post(validate(validation.createPost), (req, res) => {
-  // send only the data that is required by the controller
-  const response = {
-    success: false,
-    message: "",
-    data: {}
-  };
-  logger.info(req.body);
-  PostController.create(req.body)
-    .then(post => {
-      if (!post) {
-        response.success = false;
-        response.message = "Something went wrong";
-        return res.status(500).json(response);
-      } else {
-        response.success = true;
-        response.message = "Success";
-        response.data = post;
-        return res.status(201).json(response);
-      }
-    })
-    .catch(err => {
-      logger.error(err);
-      response.success = false;
-      response.message = err.message;
-      return res.status(403).json(response);
-    });
-});
+router.route("/create").post(
+  validate(validation.createPost),
+  asyncHandler(async (req, res) => {
+    // send only the data that is required by the controller
+    const post = await PostController.create(req.body);
+    if (!post) {
+      throw new Error("Something went wrong");
+    }
+    const response = {};
+    response.statusCode = 200;
+    response.message = "Success";
+    response.data = post;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {put} /update/<postId> Update [PUT]
@@ -107,35 +96,21 @@ router.route("/create").post(validate(validation.createPost), (req, res) => {
  *     }
  */
 
-router
-  .route("/update/:postId")
-  .put(validate(validation.updatePost), (req, res) => {
+router.route("/update/:postId").put(
+  validate(validation.updatePost),
+  asyncHandler(async (req, res) => {
     // send only the data that is required by the controller
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
-    PostController.update(req.params, req.body)
-      .then(post => {
-        if (!post) {
-          response.success = false;
-          response.message = "Something went wrong";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = post;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(err => {
-        logger.error(err);
-        response.success = false;
-        response.message = err.message;
-        return res.status(403).json(response);
-      });
-  });
+    const post = await PostController.update(req.params, req.body);
+    if (!post) {
+      throw new Error("Something went wrong !!");
+    }
+    const response = {};
+    response.statusCode = 200;
+    response.message = "Success";
+    response.data = post;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {get} /posts/<postId> Get One Post [GET]
@@ -169,33 +144,21 @@ router
  *     }
  */
 
-router.route("/posts/:postId").get(validate(validation.getPost), (req, res) => {
-  // send only the data that is required by the controller
-  const response = {
-    success: false,
-    message: "",
-    data: {}
-  };
-  PostController.get(req.params)
-    .then(post => {
-      if (!post) {
-        response.success = false;
-        response.message = "Something went wrong";
-        return res.status(500).json(response);
-      } else {
-        response.success = true;
-        response.message = "Success";
-        response.data = post;
-        return res.status(201).json(response);
-      }
-    })
-    .catch(err => {
-      logger.error(err);
-      response.success = false;
-      response.message = err.message;
-      return res.status(403).json(response);
-    });
-});
+router.route("/posts/:postId").get(
+  validate(validation.getPost),
+  asyncHandler(async (req, res) => {
+    // send only the data that is required by the controller
+    const post = await PostController.get(req.params);
+    if (!post) {
+      throw new Error("Something went wrong");
+    }
+    const response = {};
+    response.statusCode = 200;
+    response.message = "Success";
+    response.data = post;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {delete} /delete/<postId> Delete Post [DELETE]
@@ -228,36 +191,22 @@ router.route("/posts/:postId").get(validate(validation.getPost), (req, res) => {
  *     }
  */
 
-router
-  .route("/delete/:postId")
-  .delete(validate(validation.deletePost), (req, res) => {
+router.route("/delete/:postId").delete(
+  validate(validation.deletePost),
+  asyncHandler(async (req, res) => {
     // send only the data that is required by the controller
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
     logger.info(req.body);
-    PostController.delete(req.body)
-      .then(post => {
-        if (!post) {
-          response.success = false;
-          response.message = "Something went wrong";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = post;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(err => {
-        logger.error(err);
-        response.success = false;
-        response.message = err.message;
-        return res.status(403).json(response);
-      });
-  });
+    const post = await PostController.delete(req.body);
+    if (!post) {
+      throw new Error("Something went wrong");
+    }
+    const response = {};
+    response.statusCode = 200;
+    response.message = "Success";
+    response.data = post;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {get} /posts Get Multiple Posts [GET]
@@ -294,35 +243,23 @@ router
  *     }
  */
 
-router.route("/posts").get(validate(validation.getPostList), (req, res) => {
-  // send only the data that is required by the controller
-  const response = {
-    success: false,
-    message: "",
-    data: {}
-  };
-  logger.info(req.body);
-  PostController.getList(req.body)
-    .then(post => {
-      if (!post) {
-        response.success = false;
-        response.message = "Something went wrong";
-        return res.status(500).json(response);
-      } else {
-        response.success = true;
-        response.message = "Success";
-        response.data = {
-          postList: post
-        };
-        return res.status(201).json(response);
-      }
-    })
-    .catch(err => {
-      logger.error(err);
-      response.success = false;
-      response.message = err.message;
-      return res.status(403).json(response);
-    });
-});
+router.route("/posts").get(
+  validate(validation.getPostList),
+  asyncHandler(async (req, res) => {
+    // send only the data that is required by the controller
+    logger.info(req.body);
+    const posts = await PostController.getList(req.body);
+    if (!posts) {
+      throw new Error("Something went wrong");
+    }
+    const response = {};
+    response.statusCode = 200;
+    response.message = "Success";
+    response.data = {
+      postList: posts
+    };
+    return responseHandler(res, response);
+  })
+);
 
 module.exports = router;

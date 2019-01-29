@@ -9,116 +9,69 @@ const _post = {};
 
 dotenv.config();
 
-_post.create = function(payloadData) {
-  return new Promise((resolve, reject) => {
-    if (!payloadData.body || !payloadData.title) {
-      reject(new Error("Please pass body and title."));
-    } else {
-      // Hash Password
-      const post = new Post(payloadData);
-      post
-        .save()
-        .then(postSaved => {
-          resolve(postSaved);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    }
-  });
+_post.create = async function create(payloadData) {
+  if (!payloadData.body || !payloadData.title) {
+    throw new Error("Please pass body and title.");
+  }
+  // Hash Password
+  const post = new Post(payloadData);
+  const postSaved = await post.save();
+  return postSaved.toObject();
 };
 
-_post.update = function(params, payloadData) {
-  return new Promise((resolve, reject) => {
-    if (!params.postId) {
-      reject(new Error("Please pass id for updating the post."));
-    } else {
-      // Hash Password
-      const criteria = {
-        _id: params.postId
-      };
-      const projection = {};
-      const option = {};
-      Post.findOne(criteria, projection, option)
-        .exec()
-        .then(post => {
-          post.title = payloadData.title || post.title || "";
-          post.body = payloadData.body || post.body || "";
-          return post.save();
-        })
-        .then(postSaved => {
-          postSaved = postSaved.toObject();
-          resolve(postSaved);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    }
-  });
+_post.update = async function update({ postId }, { title, body }) {
+  if (!postId) {
+    throw new Error("Please pass id for updating the post.");
+  }
+  // Hash Password
+  const criteria = {
+    _id: postId
+  };
+  const projection = {};
+  const option = {};
+  const post = await Post.findOne(criteria, projection, option).exec();
+  post.title = title || post.title || "";
+  post.body = body || post.body || "";
+  const postSaved = await post.save();
+  return postSaved.toObject();
 };
 
-_post.get = function(params) {
-  return new Promise((resolve, reject) => {
-    if (!params.postId) {
-      reject(new Error("Please pass id for getting the post."));
-    } else {
-      // Hash Password
-      const criteria = {
-        _id: params.postId
-      };
-      const projection = {
-        title: 1,
-        body: 1
-      };
-      const option = {
-        lean: true
-      };
-      Post.findOne(criteria, projection, option)
-        .exec()
-        .then(postFetched => {
-          resolve(postFetched);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    }
-  });
+_post.get = async function get({ postId }) {
+  if (!postId) {
+    throw new Error("Please pass id for getting the post.");
+  }
+  // Hash Password
+  const criteria = {
+    _id: postId
+  };
+  const projection = {
+    title: 1,
+    body: 1
+  };
+  const option = {
+    lean: true
+  };
+  const post = await Post.findOne(criteria, projection, option).exec();
+  return post;
 };
 
-_post.delete = function(params) {
-  return new Promise((resolve, reject) => {
-    if (!params.postId) {
-      reject(new Error("Please pass id for deleting the post."));
-    } else {
-      const criteria = {
-        _id: params.postId
-      };
-      Post.findOneAndRemove(criteria)
-        .exec()
-        .then(postFetched => {
-          resolve(postFetched);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    }
-  });
+_post.delete = async ({ postId }) => {
+  if (!postId) {
+    throw new Error("Please pass id for deleting the post.");
+  }
+  const criteria = {
+    _id: postId
+  };
+  return Post.findOneAndRemove(criteria).exec();
 };
 
-_post.getList = function() {
-  return new Promise((resolve, reject) => {
-    const criteria = {};
-    const projection = {};
-    const option = {};
-    Post.find(criteria, projection, option)
-      .exec()
-      .then(postFetched => {
-        resolve(postFetched);
-      })
-      .catch(error => {
-        reject(error);
-      });
-  });
+_post.getList = async () => {
+  const criteria = {};
+  const projection = {};
+  const option = {
+    lean: true
+  };
+  return Post.find(criteria, projection, option).exec();
 };
 
 module.exports = _post;
