@@ -11,6 +11,8 @@ const validation = require("./user.validation");
 const UserController = require("./user.controller");
 const { logger } = require("../../utils");
 const auth = require("../../lib/auth");
+const asyncHandler = require("../common/async.handler");
+const responseHandler = require("../common/response.handler");
 
 /**
  * @api {post} /signup Signup [POST]
@@ -47,34 +49,18 @@ const auth = require("../../lib/auth");
  *     }
  */
 
-router.route("/signup").post(validate(validation.signup), (req, res) => {
-  // send only the data that is required by the controller
-  const response = {
-    success: false,
-    message: "",
-    data: {}
-  };
-  logger.info(req.body);
-  UserController.signup(req.body)
-    .then(userData => {
-      if (!userData) {
-        response.success = false;
-        response.message = "Something went wrong";
-        return res.status(500).json(response);
-      } else {
-        response.success = true;
-        response.message = "Success";
-        response.data = userData;
-        return res.status(201).json(response);
-      }
-    })
-    .catch(err => {
-      logger.error(err);
-      response.success = false;
-      response.message = err.message;
-      return res.status(403).json(response);
-    });
-});
+router.route("/signup").post(
+  validate(validation.signup),
+  asyncHandler(async (req, res) => {
+    // send only the data that is required by the controller
+    logger.info(req.body);
+    const userData = await UserController.signup(req.body);
+    const response = {};
+    response.statusCode = 201;
+    response.data = userData;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {post} /login Login [POST]
@@ -110,34 +96,18 @@ router.route("/signup").post(validate(validation.signup), (req, res) => {
  *     }
  */
 
-router.route("/login").post(validate(validation.login), (req, res) => {
-  const response = {
-    success: false,
-    message: "",
-    data: {}
-  };
-  // send only the data that is required by the controller
-  logger.info(req.body);
-  UserController.login(req.body)
-    .then(data => {
-      if (!data) {
-        response.success = false;
-        response.message = "Something went wrong";
-        return res.status(500).json(response);
-      } else {
-        response.success = true;
-        response.message = "Success";
-        response.data = data;
-        return res.status(200).json(response);
-      }
-    })
-    .catch(error => {
-      logger.error(error);
-      response.success = false;
-      response.message = error.message;
-      return res.status(403).json(response);
-    });
-});
+router.route("/login").post(
+  validate(validation.login),
+  asyncHandler(async (req, res) => {
+    // send only the data that is required by the controller
+    logger.info(req.body);
+    const data = await UserController.login(req.body);
+    const response = {};
+    response.statusCode = 200;
+    response.data = data;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {get} /profile Profile [GET]
