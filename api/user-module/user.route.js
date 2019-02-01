@@ -142,33 +142,37 @@ router.route("/login").post(
  */
 router
   .route("/profile")
-  .get(validate(validation.getProfile), auth.common, (req, res) => {
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
-    // send only the data that is required by the controller
-    UserController.getProfile(req.user)
-      .then(userData => {
-        if (!userData) {
+  .get(
+    validate(validation.getProfile),
+    asyncHandler(auth.common),
+    (req, res) => {
+      const response = {
+        success: false,
+        message: "",
+        data: {}
+      };
+      // send only the data that is required by the controller
+      UserController.getProfile(req.user)
+        .then(userData => {
+          if (!userData) {
+            response.success = false;
+            response.message = "Something went wrong";
+            return res.status(500).json(response);
+          } else {
+            response.success = true;
+            response.message = "Success";
+            response.data = userData;
+            return res.status(201).json(response);
+          }
+        })
+        .catch(error => {
+          logger.error(error);
           response.success = false;
-          response.message = "Something went wrong";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = userData;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(error => {
-        logger.error(error);
-        response.success = false;
-        response.message = error.message;
-        return res.status(403).json(response);
-      });
-  })
+          response.message = error.message;
+          return res.status(403).json(response);
+        });
+    }
+  )
   /**
    * @api {post} /profile Profile [POST]
    * @apiGroup Profile
@@ -201,34 +205,38 @@ router
    *     }
    */
 
-  .post(validate(validation.updateProfile), auth.common, (req, res) => {
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
-    // send only the data that is required by the controller
-    logger.info(req.body);
-    UserController.updateProfile(req.user, req.body)
-      .then(userData => {
-        if (!userData) {
+  .post(
+    validate(validation.updateProfile),
+    asyncHandler(auth.common),
+    (req, res) => {
+      const response = {
+        success: false,
+        message: "",
+        data: {}
+      };
+      // send only the data that is required by the controller
+      logger.info(req.body);
+      UserController.updateProfile(req.user, req.body)
+        .then(userData => {
+          if (!userData) {
+            response.success = false;
+            response.message = "Something went wrong";
+            return res.status(500).json(response);
+          } else {
+            response.success = true;
+            response.message = "Success";
+            response.data = userData;
+            return res.status(201).json(response);
+          }
+        })
+        .catch(error => {
+          logger.error(error);
           response.success = false;
-          response.message = "Something went wrong";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = userData;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(error => {
-        logger.error(error);
-        response.success = false;
-        response.message = error.message;
-        return res.status(403).json(response);
-      });
-  });
+          response.message = error.message;
+          return res.status(403).json(response);
+        });
+    }
+  );
 
 /**
  * @api {get} /forgot-password ForgotPassword [GET]
