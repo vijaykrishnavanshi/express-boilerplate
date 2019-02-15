@@ -11,6 +11,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const routes = require("./api/routes");
+const errorHandler = require("./lib/error.handler");
+
 // Express App
 const app = express();
 // Setup DB Connection
@@ -33,10 +35,7 @@ app.use("/ping", function(req, res) {
 app.use("/v1", routes);
 app.use("/documentation", express.static("docs"));
 
-app.use(function(err, req, res, next) {
-  res.status(400).json(err);
-  next();
-});
+app.use(errorHandler);
 
 // Export the express app instance
 module.exports = app;
