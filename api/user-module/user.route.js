@@ -145,33 +145,14 @@ router
   .get(
     validate(validation.getProfile),
     asyncHandler(auth.common),
-    (req, res) => {
-      const response = {
-        success: false,
-        message: "",
-        data: {}
-      };
+    asyncHandler(async (req, res) => {
       // send only the data that is required by the controller
-      UserController.getProfile(req.user)
-        .then(userData => {
-          if (!userData) {
-            response.success = false;
-            response.message = "Something went wrong";
-            return res.status(500).json(response);
-          } else {
-            response.success = true;
-            response.message = "Success";
-            response.data = userData;
-            return res.status(201).json(response);
-          }
-        })
-        .catch(error => {
-          logger.error(error);
-          response.success = false;
-          response.message = error.message;
-          return res.status(403).json(response);
-        });
-    }
+      const data = await UserController.getProfile(req.user);
+      const response = {};
+      response.statusCode = 200;
+      response.data = data;
+      return responseHandler(res, response);
+    })
   )
   /**
    * @api {post} /profile Profile [POST]
@@ -208,34 +189,15 @@ router
   .post(
     validate(validation.updateProfile),
     asyncHandler(auth.common),
-    (req, res) => {
-      const response = {
-        success: false,
-        message: "",
-        data: {}
-      };
+    asyncHandler(async (req, res) => {
       // send only the data that is required by the controller
       logger.info(req.body);
-      UserController.updateProfile(req.user, req.body)
-        .then(userData => {
-          if (!userData) {
-            response.success = false;
-            response.message = "Something went wrong";
-            return res.status(500).json(response);
-          } else {
-            response.success = true;
-            response.message = "Success";
-            response.data = userData;
-            return res.status(201).json(response);
-          }
-        })
-        .catch(error => {
-          logger.error(error);
-          response.success = false;
-          response.message = error.message;
-          return res.status(403).json(response);
-        });
-    }
+      const data = await UserController.updateProfile(req.user, req.body);
+      const response = {};
+      response.statusCode = 200;
+      response.data = data;
+      return responseHandler(res, response);
+    })
   );
 
 /**
@@ -268,36 +230,18 @@ router
  *     }
  */
 
-router
-  .route("/forgot-password")
-  .post(validate(validation.forgotPassword), (req, res) => {
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
+router.route("/forgot-password").post(
+  validate(validation.forgotPassword),
+  asyncHandler(async (req, res) => {
     // send only the data that is required by the controller
     logger.info(req.query);
-    UserController.forgotPassword(req.query)
-      .then(userData => {
-        if (!userData) {
-          response.success = false;
-          response.message = "Something went wrong !!";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = userData;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(error => {
-        logger.error(error);
-        response.success = false;
-        response.message = error.message;
-        return res.status(403).json(response);
-      });
-  });
+    const data = UserController.forgotPassword(req.query);
+    const response = {};
+    response.statusCode = 200;
+    response.data = data;
+    return responseHandler(res, response);
+  })
+);
 /**
  * @api {post} /verify-token VerifyToken [POST]
  * @apiGroup Recovery
@@ -331,36 +275,18 @@ router
  *       "data": {}
  *     }
  */
-router
-  .route("/verify-token")
-  .post(validate(validation.verifyToken), (req, res) => {
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
+router.route("/verify-token").post(
+  validate(validation.verifyToken),
+  asyncHandler(async (req, res) => {
     // send only the data that is required by the controller
     logger.info(req.body);
-    UserController.verifyToken(req.body)
-      .then(userData => {
-        if (!userData) {
-          response.success = false;
-          response.message = "Something went wrong !!";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = userData;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(error => {
-        logger.error(error);
-        response.success = false;
-        response.message = error.message;
-        return res.status(403).json(response);
-      });
-  });
+    const data = await UserController.verifyToken(req.body);
+    const response = {};
+    response.statusCode = 201;
+    response.data = data;
+    return responseHandler(res, response);
+  })
+);
 
 /**
  * @api {post} /change-password ChangePassword [POST]
@@ -392,35 +318,17 @@ router
  *       "data": {}
  *     }
  */
-router
-  .route("/change-password")
-  .post(validate(validation.changePassword), (req, res) => {
-    const response = {
-      success: false,
-      message: "",
-      data: {}
-    };
+router.route("/change-password").post(
+  validate(validation.changePassword),
+  asyncHandler(async (req, res) => {
     // send only the data that is required by the controller
     logger.info(req.body);
-    UserController.changePassword(req.body)
-      .then(userData => {
-        if (!userData) {
-          response.success = false;
-          response.message = "Something went wrong !!";
-          return res.status(500).json(response);
-        } else {
-          response.success = true;
-          response.message = "Success";
-          response.data = userData;
-          return res.status(201).json(response);
-        }
-      })
-      .catch(err => {
-        logger.error(err);
-        response.success = false;
-        response.message = err.message;
-        return res.status(403).json(response);
-      });
-  });
+    const data = await UserController.changePassword(req.body);
+    const response = {};
+    response.statusCode = 201;
+    response.data = data;
+    return responseHandler(res, response);
+  })
+);
 
 module.exports = router;
