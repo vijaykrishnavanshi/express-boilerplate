@@ -1,5 +1,7 @@
 # Template Project
 
+[![Build Status](https://travis-ci.com/vijaykrishnavanshi/express-boilerplate.svg?branch=master)](https://travis-ci.com/vijaykrishnavanshi/express-boilerplate)
+
 This template is used for creating APIs using Express.
 
 ## Prerequisites
