@@ -1,12 +1,13 @@
 {
-  "name": "template-module",
-  "version": "0.0.1",
-  "description": "This repo contains the template code that can be used to develop new mcroservices.",
+  "name": "express-boilerplate",
+  "version": "0.1.0",
+  "description": "This repo contains template project for creating APIs in express.",
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive \"./api/**/*.test.js\"",
     "start": "node server.js",
-    "lint": "./node_modules/.bin/eslint . --fix",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint . --fix",
     "generate-docs": "./node_modules/apidoc/bin/apidoc -i ./ -f \".*\\.route[s]?.js$\" -o docs/"
   },
   "keywords": [
