@@ -71,6 +71,9 @@ _user.login = async function(payloadData) {
 
 // Get Particular User Profile
 _user.getProfile = async function(userData) {
+  if (!userData || !userData._id) {
+    throw new Error("No User Found!");
+  }
   const criteria = {
     _id: userData._id
   };

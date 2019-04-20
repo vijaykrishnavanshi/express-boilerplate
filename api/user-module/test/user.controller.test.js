@@ -1,27 +1,19 @@
 const assert = require("assert");
 const UserController = require("../user.controller");
 
-describe("Dummy Controller", function() {
-  describe("#get()", function() {
-    it("should error when no data is present in the db", function() {
-      const queryData = {
-        status: true
-      };
-      UserController.get(queryData).catch(err => {
-        assert.equal(err, new Error("Data not found"));
+describe("User Controller", function() {
+  describe("#getProfile()", async function() {
+    it("should error when no data is present in the db", async function() {
+      return UserController.getProfile().catch(err => {
+        assert.equal(err.message, "No User Found!");
       });
     });
   });
-  describe("#post()", function() {
-    it("should not create data if body is empty", function() {
-      const queryData = {};
-      UserController.post(queryData)
-        .then(data => {
-          assert.not.exist(data);
-        })
-        .catch(err => {
-          assert.exist(err);
-        });
+  describe("#forgotPassword()", async function() {
+    it("should not send forgot password email if email is empty", function() {
+      return UserController.forgotPassword({}).catch(err => {
+        assert.equal(err.message, "Please enter the email address");
+      });
     });
   });
 });

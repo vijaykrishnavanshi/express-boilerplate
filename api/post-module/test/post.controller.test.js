@@ -1,27 +1,19 @@
 const assert = require("assert");
-const UserController = require("../post.controller");
+const PostController = require("../post.controller");
 
-describe("Dummy Controller", function() {
+describe("Post Controller", function() {
   describe("#get()", function() {
-    it("should error when no data is present in the db", function() {
-      const queryData = {
-        status: true
-      };
-      UserController.get(queryData).catch(err => {
-        assert.equal(err, new Error("Data not found"));
+    it("should error when no data is present in the db", async function() {
+      return PostController.get({}).catch(error => {
+        assert.equal(error.message, "Please pass id for getting the post.");
       });
     });
   });
-  describe("#post()", function() {
-    it("should not create data if body is empty", function() {
-      const queryData = {};
-      UserController.post(queryData)
-        .then(data => {
-          assert.not.exist(data);
-        })
-        .catch(err => {
-          assert.exist(err);
-        });
+  describe("#delete()", function() {
+    it("should error when no data is present in the db", async function() {
+      return PostController.delete({}).catch(error => {
+        assert.equal(error.message, "Please pass id for deleting the post.");
+      });
     });
   });
 });
