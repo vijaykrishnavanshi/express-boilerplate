@@ -1,6 +1,6 @@
 # Template Project
 
-[![Build Status](https://travis-ci.com/vijaykrishnavanshi/express-boilerplate.svg?branch=master)](https://travis-ci.com/vijaykrishnavanshi/express-boilerplate)
+[![Build Status](https://travis-ci.com/vijaykrishnavanshi/express-boilerplate.svg?branch=master)](https://travis-ci.com/vijaykrishnavanshi/express-boilerplate) [![Greenkeeper badge](https://badges.greenkeeper.io/vijaykrishnavanshi/express-boilerplate.svg)](https://greenkeeper.io/)
 
 This template is used for creating APIs using Express.
 
