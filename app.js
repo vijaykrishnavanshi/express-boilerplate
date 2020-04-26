@@ -3,7 +3,7 @@
 /*
  * This file exports the app that is used by the server to expose the routes.
  * And make the routes visible.
-*/
+ */
 
 const express = require("express");
 const logger = require("morgan");
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // This is to check if the service is online or not
-app.use("/ping", function(req, res) {
+app.use("/ping", function (req, res) {
   res.json({ reply: "pong" });
   res.end();
 });

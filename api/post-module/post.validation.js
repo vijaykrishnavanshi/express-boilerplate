@@ -1,8 +1,8 @@
 "use strict";
 
 /*
- * This file contains code for validation of request params 
-*/
+ * This file contains code for validation of request params
+ */
 
 const Joi = require("joi");
 
@@ -11,45 +11,45 @@ const strictChecking = {
   allowUnknownHeaders: true,
   allowUnknownQuery: false,
   allowUnknownParams: false,
-  allowUnknownCookies: false
+  allowUnknownCookies: false,
 };
 
 const createPost = {
   options: strictChecking,
   body: {
     title: Joi.string().required(),
-    body: Joi.string().required()
-  }
+    body: Joi.string().required(),
+  },
 };
 
 const updatePost = {
   options: strictChecking,
   params: {
-    postId: Joi.string().required()
+    postId: Joi.string().required(),
   },
   body: {
     title: Joi.string().required(),
-    body: Joi.string().required()
-  }
+    body: Joi.string().required(),
+  },
 };
 
 const getPost = {
   options: strictChecking,
   params: {
-    postId: Joi.string().required()
-  }
+    postId: Joi.string().required(),
+  },
 };
 
 const deletePost = {
   options: strictChecking,
   params: {
-    postId: Joi.string().required()
-  }
+    postId: Joi.string().required(),
+  },
 };
 
 const getPostList = {
   options: strictChecking,
-  query: {}
+  query: {},
 };
 
 module.exports = {
@@ -57,5 +57,5 @@ module.exports = {
   updatePost,
   getPost,
   deletePost,
-  getPostList
+  getPostList,
 };

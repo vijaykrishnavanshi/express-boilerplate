@@ -1,7 +1,7 @@
 /*
  *
  * This file will have all the user management related functions
- * 
+ *
  */
 const Post = require("./post");
 const dotenv = require("dotenv");
@@ -25,7 +25,7 @@ _post.update = async function update({ postId }, { title, body }) {
   }
   // Hash Password
   const criteria = {
-    _id: postId
+    _id: postId,
   };
   const projection = {};
   const option = {};
@@ -42,14 +42,14 @@ _post.get = async function get({ postId }) {
   }
   // Hash Password
   const criteria = {
-    _id: postId
+    _id: postId,
   };
   const projection = {
     title: 1,
-    body: 1
+    body: 1,
   };
   const option = {
-    lean: true
+    lean: true,
   };
   const post = await Post.findOne(criteria, projection, option).exec();
   return post;
@@ -60,7 +60,7 @@ _post.delete = async ({ postId }) => {
     throw new Error("Please pass id for deleting the post.");
   }
   const criteria = {
-    _id: postId
+    _id: postId,
   };
   return Post.findOneAndRemove(criteria).exec();
 };
@@ -69,7 +69,7 @@ _post.getList = async () => {
   const criteria = {};
   const projection = {};
   const option = {
-    lean: true
+    lean: true,
   };
   return Post.find(criteria, projection, option).exec();
 };

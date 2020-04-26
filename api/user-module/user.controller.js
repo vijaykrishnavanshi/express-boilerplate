@@ -1,7 +1,7 @@
 /*
  *
  * This file will have all the user management related functions
- * 
+ *
  */
 const User = require("./user");
 const utils = require("../../utils");
@@ -12,7 +12,7 @@ const _user = {};
 
 dotenv.config();
 
-_user.signup = async function(payloadData) {
+_user.signup = async function (payloadData) {
   if (!payloadData.email || !payloadData.password) {
     throw new Error("Please pass username and password.");
   }
@@ -33,11 +33,11 @@ _user.signup = async function(payloadData) {
 
   return {
     token: token,
-    id: savedUser.id
+    id: savedUser.id,
   };
 };
 
-_user.login = async function(payloadData) {
+_user.login = async function (payloadData) {
   if (!payloadData.email || !payloadData.password) {
     throw new Error("Please send email and password.");
   }
@@ -45,13 +45,13 @@ _user.login = async function(payloadData) {
   payloadData.password = utils.helpers.hash(payloadData.password);
   const criteria = {
     email: payloadData.email,
-    password: payloadData.password
+    password: payloadData.password,
   };
   const projection = {
-    password: 0
+    password: 0,
   };
   const option = {
-    lean: true
+    lean: true,
   };
   const user = await User.findOne(criteria, projection, option);
   if (!user) {
@@ -65,25 +65,25 @@ _user.login = async function(payloadData) {
   // return the information including token as JSON
   return {
     token: token,
-    id: user.id
+    id: user.id,
   };
 };
 
 // Get Particular User Profile
-_user.getProfile = async function(userData) {
+_user.getProfile = async function (userData) {
   if (!userData || !userData._id) {
     throw new Error("No User Found!");
   }
   const criteria = {
-    _id: userData._id
+    _id: userData._id,
   };
   const projection = {
     _id: 0,
     password: 0,
-    created: 0
+    created: 0,
   };
   const option = {
-    lean: true
+    lean: true,
   };
   const user = await User.findOne(criteria, projection, option);
   return user;
@@ -92,10 +92,10 @@ _user.getProfile = async function(userData) {
 // Get Particular User Profile
 _user.updateProfile = async function updateProfile(userData, payloadData) {
   const criteria = {
-    _id: userData._id
+    _id: userData._id,
   };
   const projection = {
-    password: 0
+    password: 0,
   };
   const option = {};
   const user = await User.findOne(criteria, projection, option);
@@ -108,12 +108,12 @@ _user.updateProfile = async function updateProfile(userData, payloadData) {
 };
 
 //Forgot Password
-_user.forgotPassword = async function(payloadData) {
+_user.forgotPassword = async function (payloadData) {
   if (!payloadData || !payloadData.email) {
     throw new Error("Please enter the email address");
   }
   const criteria = {
-    email: payloadData.email
+    email: payloadData.email,
   };
   const projection = {};
   const option = {};
@@ -123,36 +123,36 @@ _user.forgotPassword = async function(payloadData) {
   }
   const buffer = crypto.randomBytes(20);
   user.resetToken = buffer.toString("hex");
-  const userData = await user.save().then(data => {
+  const userData = await user.save().then((data) => {
     return {
       name: data.name,
       email: data.email,
-      resetToken: data.resetToken
+      resetToken: data.resetToken,
     };
   });
   const token = await TokenManager.signToken(userData);
   return {
     success: true,
-    token: token
+    token: token,
   };
 };
 
-_user.verifyToken = async function(payloadData) {
+_user.verifyToken = async function (payloadData) {
   if (!payloadData || !payloadData.token) {
     throw new Error("Please enter the token");
   }
   const decodedData = await TokenManager.verifyToken(payloadData.token);
   const criteria = {
     email: decodedData.email,
-    resetToken: decodedData.resetToken
+    resetToken: decodedData.resetToken,
   };
   const projection = {
     email: 1,
     name: 1,
-    resetToken: 1
+    resetToken: 1,
   };
   const option = {
-    lean: true
+    lean: true,
   };
   const user = await User.findOne(criteria, projection, option);
   if (!user) {
@@ -161,7 +161,7 @@ _user.verifyToken = async function(payloadData) {
   const dataToSend = {
     name: user.name || "",
     email: user.email || "",
-    token: payloadData.token
+    token: payloadData.token,
   };
   return dataToSend;
 };
@@ -171,13 +171,13 @@ _user.changePassword = async function changePassword(payloadData) {
   const decodedData = await TokenManager.verifyToken(payloadData.token);
   const criteria = {
     email: decodedData.email,
-    resetToken: decodedData.resetToken
+    resetToken: decodedData.resetToken,
   };
   const projection = {
     email: 1,
     name: 1,
     resetToken: 1,
-    password: 1
+    password: 1,
   };
   const option = {};
   const user = await User.findOne(criteria, projection, option);

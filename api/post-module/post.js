@@ -10,8 +10,8 @@ const PostSchema = new Schema({
   authoredBy: { type: Schema.ObjectId, default: null },
   created: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Post", PostSchema);

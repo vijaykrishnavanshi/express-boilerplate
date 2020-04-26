@@ -1,9 +1,9 @@
 "use strict";
 
 /*
- * This file contails all the routes that are related to 
- * auth of the user. 
-*/
+ * This file contails all the routes that are related to
+ * auth of the user.
+ */
 const express = require("express");
 const router = express.Router();
 const validate = require("express-validation");

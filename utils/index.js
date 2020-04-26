@@ -2,9 +2,9 @@
 
 /*
  * This file all the utility files
-*/
+ */
 
 module.exports = {
   logger: require("./logger"),
-  helpers: require("./helper")
+  helpers: require("./helper"),
 };

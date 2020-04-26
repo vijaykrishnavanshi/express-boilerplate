@@ -8,7 +8,7 @@ _tokenManager.signToken = async function signToken(data) {
   // Assign jwt token
   const secret = process.env.SECRET || "Development";
   const token = jwt.sign(data, secret, {
-    expiresIn: process.env.TIME_TO_EXPIRE || "15m" // expires in 15 minutes
+    expiresIn: process.env.TIME_TO_EXPIRE || "15m", // expires in 15 minutes
   });
   if (!token) {
     throw new Error("Unable to sign token !!");
@@ -20,7 +20,7 @@ _tokenManager.signOTPToken = async function signOTPToken(data) {
   // Assign jwt token
   const secret = process.env.SECRET || "Development";
   const token = jwt.sign(data, secret, {
-    expiresIn: "15m" // expires in 15 minutes
+    expiresIn: "15m", // expires in 15 minutes
   });
   if (!token) {
     throw new Error("Unable to sign token !!");
