@@ -30,7 +30,7 @@
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "request": "^2.88.2",
-    "request-promise-native": "^1.0.8"
+    "request-promise-native": "^1.0.9"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
