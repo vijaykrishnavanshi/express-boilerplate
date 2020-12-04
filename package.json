@@ -40,7 +40,7 @@
     "eslint-plugin-security": "^1.4.0",
     "husky": "4.2.5",
     "mocha": "^8.1.1",
-    "nock": "^13.0.4",
+    "nock": "^13.0.5",
     "prettier": "^2.0.5"
   }
 }
