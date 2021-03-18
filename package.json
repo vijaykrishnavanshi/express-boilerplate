@@ -17,7 +17,7 @@
   "author": "Vijay Krishnavanshi",
   "license": "MIT",
   "dependencies": {
-    "apidoc": "^0.24.0",
+    "apidoc": "^0.27.1",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.14",
     "cookie-parser": "^1.4.5",
